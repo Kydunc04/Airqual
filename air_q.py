@@ -21,6 +21,10 @@ print(full_day)
 print(type(full_date))
 print(type(full_time))
 
+x = datetime(2020, 6, 1)
+print(x)
+print(x.strftime("%j"))
+
 # Created a simple example csv showing random PM1.0, PM2.5 & PM10
 # numbers using Excel.
 
@@ -30,6 +34,23 @@ print(db.head(10))
 print(db.info())
 print(db.isna().sum())
 
+db = pd.read_csv('example.csv')
+day_of_year = dt.strftime("%j")
+
+# Last 7 days
+
+for row in db["Time"]:
+    y, m, d = row.split("-")
+    row_date = datetime(int(y), int(m), int(d))
+    if int(day_of_year) -6 <= int(row_date.strftime("%j")) <= int(day_of_year):
+        print(row)
+
+for col in db:
+    for row in db[col]:
+        print(row)
+
 # Fill NA's using Mean
 x = db["PM2.5"].mean()
 db["PM2.5"].fillna(x.round(), inplace=True)
+
+# Put data from csv into numpy array prolly - pd.timestamp?
