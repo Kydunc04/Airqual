@@ -14,10 +14,10 @@ mdb = np.array(m_list)  # Changed to appending list when actual data must be ins
 print(f"{mdb}\n{'':=^33}\n")
 
 # Data Cleaning
-
-df = pd.DataFrame(mdb)
-df.to_csv("mdb.csv", header=False, index=False)  # Can give header/index
-                                                           # if needed.
+with open("mdb.csv", "a") as m:
+    for l in mdb:
+        PM1, PM2, PM3, Date = l
+        m.write(f"{PM1},{PM2},{PM3},{Date}\n")
 
 # Last 7 days db
 ls_list = []
