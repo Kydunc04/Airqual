@@ -1,5 +1,6 @@
 import numpy as np
 from datetime import datetime
+import pandas as pd
 
 m_list = []
 with open("example.csv") as f:
@@ -9,8 +10,14 @@ with open("example.csv") as f:
         PM1, PM2, PM3, StrDate = line.split(',')  #PM2 = PM2.5 & PM3 = PM10
         m_list.append([PM1, PM2, PM3, StrDate[:-1]])
 
-mdb = np.array(m_list)
+mdb = np.array(m_list)  # Changed to appending list when actual data must be inserted
 print(f"{mdb}\n{'':=^33}\n")
+
+# Data Cleaning
+
+df = pd.DataFrame(mdb)
+df.to_csv("mdb.csv", header=False, index=False)  # Can give header/index
+                                                           # if needed.
 
 # Last 7 days db
 ls_list = []
@@ -24,7 +31,21 @@ for row in mdb:
         ls_list.append(row)
 
 print(f"{ls_list}\n{'':=^33}\n")
+lsdf = pd.DataFrame(ls_list)
+lsdf.to_csv("ls.csv", header=False, index=False)
 
+# Last month db (30 days)
+lm_list = []
+
+for row in mdb:
+    y, m, d = row[3].split("-")
+    row_date = datetime(int(y), int(m), int(d))
+    if doy - 29 <= int(row_date.strftime("%j")) <= doy:
+        lm_list.append(row)
+
+print(f"{lm_list}\n{'':=^33}\n")
+lmdf = pd.DataFrame(lm_list)
+lmdf.to_csv("lm.csv", header=False, index=False)
 
 # If the date of collection cannot be listed from the raspberry pi python can
 # timestamp each piece of data from when it is processed by the file rather by
