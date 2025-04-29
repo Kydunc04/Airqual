@@ -1,6 +1,7 @@
 import numpy as np
 from datetime import datetime
 import pandas as pd
+import requests
 
 m_list = []
 with open("example.csv") as f:
@@ -50,3 +51,10 @@ lmdf.to_csv("lm.csv", header=False, index=False)
 # If the date of collection cannot be listed from the raspberry pi python can
 # timestamp each piece of data from when it is processed by the file rather by
 # when it was collected.
+
+url = ""
+
+file = open('mdb.csv', 'rb')
+req = requests.post(url, files={"form tag thingy":file})
+
+print(req.text)
