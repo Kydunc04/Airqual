@@ -8,8 +8,8 @@ with open("example.csv") as f:
     next(f)
 
     for line in f:
-        PM1, PM2, PM3, StrDate = line.split(',')  #PM2 = PM2.5 & PM3 = PM10
-        m_list.append([PM1, PM2, PM3, StrDate[:-1]])
+        PM1, PM2, PM3, StrDate, Postcode = line.split(',')  #PM2 = PM2.5 & PM3 = PM10
+        m_list.append([PM1, PM2, PM3, StrDate, Postcode[:-1]])
 
 mdb = np.array(m_list)  # Changed to appending list when actual data must be inserted
 print(f"{mdb}\n{'':=^33}\n")
@@ -17,8 +17,8 @@ print(f"{mdb}\n{'':=^33}\n")
 # Data Cleaning
 with open("mdb.csv", "a") as m:
     for l in mdb:
-        PM1, PM2, PM3, Date = l
-        m.write(f"{PM1},{PM2},{PM3},{Date}\n")
+        PM1, PM2, PM3, Date, Post = l
+        m.write(f"{PM1},{PM2},{PM3},{Date},{Post}\n")
 
 # Last 7 days db
 ls_list = []
@@ -52,9 +52,9 @@ lmdf.to_csv("lm.csv", header=False, index=False)
 # timestamp each piece of data from when it is processed by the file rather by
 # when it was collected.
 
-url = ""
+# url = ""
 
-file = open('mdb.csv', 'rb')
-req = requests.post(url, files={"form tag thingy":file})
+# file = open('mdb.csv', 'rb')
+# req = requests.post(url, files={"form tag thingy":file})
 
-print(req.text)
+# print(req.text)
