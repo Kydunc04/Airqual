@@ -9,12 +9,18 @@ with open("example.csv") as f:
 
     for line in f:
         PM1, PM2, PM3, StrDate, Postcode = line.split(',')  #PM2 = PM2.5 & PM3 = PM10
-        m_list.append([PM1, PM2, PM3, StrDate, Postcode[:-1]])
-
-mdb = np.array(m_list)  # Changed to appending list when actual data must be inserted
-print(f"{mdb}\n{'':=^33}\n")
+        if PM1 and PM2 and PM3 and StrDate and Postcode != '':
+            m_list.append([PM1, PM2, PM3, StrDate, Postcode[:-1]])
 
 # Data Cleaning
+mdb = pd.DataFrame(m_list)
+mdb = mdb.dropna()
+mdb.drop_duplicates(inplace=True)
+
+mdb = mdb.to_numpy()
+for row in mdb:
+    print(row)
+
 with open("mdb.csv", "a") as m:
     for l in mdb:
         PM1, PM2, PM3, Date, Post = l
@@ -48,9 +54,7 @@ print(f"{lm_list}\n{'':=^33}\n")
 lmdf = pd.DataFrame(lm_list)
 lmdf.to_csv("lm.csv", header=False, index=False)
 
-# If the date of collection cannot be listed from the raspberry pi python can
-# timestamp each piece of data from when it is processed by the file rather by
-# when it was collected.
+# csv upload to website test
 
 # url = ""
 
