@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+# import requests
 
 
 def all_data():
@@ -38,3 +39,12 @@ if __name__ == '__main__':
             row_date = datetime(int(y), int(m), int(d))
             if doy - 29 <= int(row_date.strftime("%j")) <= doy:
                 lm.write(f"{PM1}, {PM2}, {PM3},{Date},{Postcode}\n")
+
+    # csv upload to website test
+
+    # url = ""
+
+    # file = open('mdb.csv', 'rb')
+    # req = requests.post(url, files={"form tag thingy":file})
+
+    # print(req.text)

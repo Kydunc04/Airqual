@@ -32,6 +32,10 @@ if __name__ == '__main__':
 
     mdb = mdb.to_numpy()
 
+    # Fill NA's using Mean
+    # x = db["PM2.5"].mean()
+    # db["PM2.5"].fillna(x.round(), inplace=True)
+
     for row in mdb:
         PM1, PM2, PM3, StrDate, Postcode = row
         add_row(PM1, PM2, PM3, StrDate, Postcode)
